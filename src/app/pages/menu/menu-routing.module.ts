@@ -15,6 +15,13 @@ const routes: Routes = [
             (m) => m.HomePageModule
           ),
       },
+      {
+        path: "gastos",
+        loadChildren: () =>
+          import("src/app/pages/gastos/gastos.module").then(
+            (m) => m.GastosPageModule
+          ),
+      },
     ],
   },
   {

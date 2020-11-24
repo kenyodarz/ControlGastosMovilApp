@@ -1,9 +1,6 @@
 #container {
-  text-align: center;
-
   position: absolute;
-  left: 0;
-  right: 0;
+  padding: 15px;
   top: 50%;
   transform: translateY(-50%);
 }
@@ -16,10 +13,8 @@
 #container p {
   font-size: 16px;
   line-height: 22px;
-
-  color: #8c8c8c;
-
-  margin: 0;
+  // color: #8c8c8c;
+  // margin: 0;
 }
 
 #container a {
