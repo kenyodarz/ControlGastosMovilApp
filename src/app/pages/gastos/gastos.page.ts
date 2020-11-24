@@ -1,5 +1,5 @@
 //* Angular */
-import { Component } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { FormGroup, FormControl } from "@angular/forms";
 import { Validators, FormBuilder } from "@angular/forms";
 /** Ionic */
@@ -29,7 +29,7 @@ import { User } from "src/app/models/user";
   templateUrl: "./gastos.page.html",
   styleUrls: ["./gastos.page.scss"],
 })
-export class GastosPage {
+export class GastosPage implements OnInit {
   currentUser: User = {
     id: null,
     username: null,
@@ -91,6 +91,20 @@ export class GastosPage {
     private storage: Storage,
     private alertController: AlertController
   ) {}
+  ngOnInit(): void {
+    this.formRegistroSalida = this.fb.group({
+      idRegistroSalida: new FormControl(),
+      observaciones: new FormControl(null, Validators.required),
+      description: new FormControl(null, Validators.required),
+      fecha: new FormControl(null, Validators.required),
+      cantidad: new FormControl(null, [
+        Validators.required,
+        Validators.pattern("^[0-9]*$"),
+        Validators.min(1),
+      ]),
+      users: new FormControl(),
+    });
+  }
 
   async ionViewDidEnter(): Promise<void> {
     this.isLoggedIn = !!this.token.getToken();
@@ -107,18 +121,7 @@ export class GastosPage {
     this.obtenerRegistrosEntrada();
     this.obtenerSaldos();
     this.obtenerRegistrosSalid();
-    this.formRegistroSalida = this.fb.group({
-      idRegistroSalida: new FormControl(),
-      observaciones: new FormControl(null, Validators.required),
-      description: new FormControl(null, Validators.required),
-      fecha: new FormControl(null, Validators.required),
-      cantidad: new FormControl(null, [
-        Validators.required,
-        Validators.pattern("^[0-9]*$"),
-        Validators.min(1),
-      ]),
-      users: new FormControl(),
-    });
+    
     this.cols = [
       { field: "fecha", header: "Fecha" },
       { field: "description", subfield: "nombre", header: "Descripcion" },

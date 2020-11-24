@@ -99,7 +99,8 @@ export class MenuPage {
     this.menuController.close();
   }
 
-  goToSalida() {
+  goToGastos() {
     this.nvCrtl.navigateRoot("/menu/gastos");
+    this.menuController.close();
   }
 }

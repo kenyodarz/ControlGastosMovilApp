@@ -13,7 +13,7 @@
     <ion-content>
       <ion-list>
         <ion-list-header> Usuario </ion-list-header>
-        <ion-item (click)="goToSalida()"
+        <ion-item (click)="goToGastos()"
           ><ion-icon name="add-circle"  color="primary" slot="start"></ion-icon
           >Cargar Gastos</ion-item
         >
@@ -23,7 +23,8 @@
         >
         <!-- <ion-item>Settings</ion-item> -->
       </ion-list>
-      <ion-list *ngIf="showAdminBoard">
+      <!-- <ion-list *ngIf="showAdminBoard"> -->
+      <ion-list *ngIf="false">
         <ion-list-header> Administrador </ion-list-header>
         <ion-item
           ><ion-icon name="bookmark" color="primary" slot="start"></ion-icon

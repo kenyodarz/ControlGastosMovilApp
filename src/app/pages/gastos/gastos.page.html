@@ -16,7 +16,7 @@
         <p-header>
           <ion-grid>
             <ion-row>
-              <ion-text color="primary"><b>Valores Inicales</b></ion-text>
+              <ion-text color="primary"><b>Valores Iniciales</b></ion-text>
             </ion-row>
           </ion-grid>
         </p-header>
@@ -79,7 +79,19 @@
       </p-panel>
     </ion-col>
     <ion-col>
-      
+      <form [formGroup]="formRegistroSalida" (ngSubmit)="onSubmit()">
+        <p-panel>
+          <p-header>
+            <ion-grid>
+              <ion-row>
+                <ion-text color="primary"
+                  ><b>Relacion Gastos de Viaje</b></ion-text
+                >
+              </ion-row>
+            </ion-grid>
+          </p-header>
+        </p-panel>
+      </form>
     </ion-col>
   </ion-grid>
 </ion-content>
