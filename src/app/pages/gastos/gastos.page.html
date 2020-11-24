@@ -78,7 +78,8 @@
         </p-footer>
       </p-panel>
     </ion-col>
-    <ion-col>
+    <!-- Siguiente Panel -->
+    <ion-col *ngIf="showActions">
       <form [formGroup]="formRegistroSalida" (ngSubmit)="onSubmit()">
         <p-panel>
           <p-header>
@@ -101,11 +102,95 @@
                   dateFormat="yy-mm-dd"
                   showButtonBar="true"
                   formControlName="fecha"
-                  locale="es"
+                  styleClass="p-inputtext-sm"
                 ></p-calendar>
               </ion-col>
+              <div class="ion-text-center">
+                <ng-container
+                  *ngIf="!formRegistroSalida.controls['fecha'].valid && (formRegistroSalida.controls['fecha'].dirty || formRegistroSalida.controls['fecha'].touched)"
+                >
+                  <ion-note color="danger">
+                    {{'El Fecha es necesaria'}}
+                  </ion-note>
+                </ng-container>
+              </div>
+            </ion-row>
+            <ion-row class="ion-justify-content-between">
+              <ion-col>
+                <ion-label>Tipo de Gasto:*</ion-label>
+              </ion-col>
+              <ion-col>
+                <p-dropdown
+                  [options]="descriptions"
+                  optionLabel="nombre"
+                  filter="true"
+                  placeholder="Descripcion"
+                  formControlName="description"
+                  styleClass="p-inputtext-sm"
+                ></p-dropdown>
+              </ion-col>
+              <div class="ion-text-center">
+                <ng-container
+                  *ngIf="!formRegistroSalida.controls['description'].valid && (formRegistroSalida.controls['description'].dirty || formRegistroSalida.controls['description'].touched)"
+                >
+                  <ion-note color="danger">
+                    {{'Seleccione una descripcion'}}
+                  </ion-note>
+                </ng-container>
+              </div>
+            </ion-row>
+            <ion-row class="ion-justify-content-between">
+              <ion-col>
+                <ion-label> Nro. Factura o detalle del gasto:* </ion-label>
+              </ion-col>
+              <ion-col>
+                <input
+                  pInputText
+                  type="text"
+                  styleClass="p-inputtext-sm"
+                  formControlName="observaciones"
+                />
+              </ion-col>
+              <div class="ion-text-center">
+                <ng-container
+                  *ngIf="!formRegistroSalida.controls['observaciones'].valid && (formRegistroSalida.controls['observaciones'].dirty || formRegistroSalida.controls['observaciones'].touched)"
+                >
+                  <ion-note color="danger">
+                    {{'Por favor Ingrese un Nro. Factura o detalle'}}
+                  </ion-note>
+                </ng-container>
+              </div>
+            </ion-row>
+            <ion-row>
+              <ion-col><ion-label>Valor</ion-label></ion-col>
+              <ion-col
+                ><input
+                  pInputText
+                  styleClass="p-inputtext-sm"
+                  type="text"
+                  formControlName="cantidad"
+              /></ion-col>
+              <div class="ion-text-center">
+                <ng-container
+                  *ngIf="!formRegistroSalida.controls['cantidad'].valid && (formRegistroSalida.controls['cantidad'].dirty || formRegistroSalida.controls['cantidad'].touched)"
+                >
+                  <ion-note color="danger">
+                    {{'Por favor una Cantidad Valida'}}
+                  </ion-note>
+                </ng-container>
+              </div>
             </ion-row>
           </ion-grid>
+          <p-footer>
+            <ion-button
+              type="submit"
+              expand="block"
+              fill="outline"
+              color="primary"
+              [disabled]="!formRegistroSalida.valid"
+              >Agregar Gasto
+            </ion-button>
+          </p-footer>
         </p-panel>
       </form>
     </ion-col>
