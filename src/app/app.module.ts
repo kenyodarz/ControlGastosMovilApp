@@ -29,6 +29,9 @@ import { AppComponent } from './app.component';
     AppRoutingModule,
     PrimengModule,
     BrowserAnimationsModule,
+    HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule,
   ],
   providers: [
     StatusBar,

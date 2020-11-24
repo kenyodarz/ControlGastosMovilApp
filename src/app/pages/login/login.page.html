@@ -1,9 +1,52 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>login</ion-title>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content>
-
+  <figure class="ion-text-center">
+    <img src="assets/img/logo.png" alt="logo" />
+  </figure>
+  <form (ngSubmit)="onLoginSubmit()" [formGroup]="loginForm">
+    <ion-item>
+      <ion-label>Usuario</ion-label>
+      <ion-input type="text" formControlName="username"></ion-input>
+    </ion-item>
+    <div class="ion-text-center">
+      <ng-container
+        *ngIf="!loginForm.controls['username'].valid && (loginForm.controls['username'].dirty || loginForm.controls['username'].touched)"
+      >
+        <ion-note color="danger"> {{'El Usuario es requerido'}} </ion-note>
+      </ng-container>
+    </div>
+    <ion-item>
+      <ion-label>Contraseña</ion-label>
+      <ion-input type="password" formControlName="password"></ion-input>
+    </ion-item>
+    <div class="ion-text-center">
+      <ng-container
+        *ngIf="!loginForm.controls['password'].valid && (loginForm.controls['password'].dirty || loginForm.controls['password'].touched)"
+      >
+        <ion-note color="danger">
+          {{loginForm.controls['password'].errors['required'] ? 'Contraseña es
+          requerida' : loginForm.controls['password'].errors['minlength'] ?
+          'Deberia tener al menos 5 caracteres' : ''}}
+        </ion-note>
+      </ng-container>
+    </div>
+    <ion-button
+      expand="block"
+      [disabled]="!loginForm.valid"
+      shape="round"
+      color="success"
+      type="submit"
+    >
+      Login !
+    </ion-button>
+  </form>
 </ion-content>
+<ion-footer class="ion-text-center">
+  <ion-button
+    expand="block"
+    fill="outline"
+    shape="round"
+    color="success"
+    (click)="goToRegister()"
+    >Click para registrar
+  </ion-button>
+</ion-footer>
