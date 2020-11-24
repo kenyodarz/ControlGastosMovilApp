@@ -34,6 +34,7 @@ import { AppComponent } from './app.component';
     ReactiveFormsModule,
   ],
   providers: [
+    authInterceptorProviders,
     StatusBar,
     SplashScreen,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },

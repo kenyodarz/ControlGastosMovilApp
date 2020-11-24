@@ -1,9 +1,85 @@
-<ion-header>
+<ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>gastos</ion-title>
+    <ion-title>
+      <ion-text color="primary"> Cargar Gastos </ion-text>
+    </ion-title>
+    <ion-button slot="end">
+      <ion-menu-button></ion-menu-button>
+    </ion-button>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-
+  <ion-grid>
+    <ion-col>
+      <p-panel class="p-fluid">
+        <p-header>
+          <ion-grid>
+            <ion-row>
+              <ion-text color="primary"><b>Valores Inicales</b></ion-text>
+            </ion-row>
+          </ion-grid>
+        </p-header>
+        <div class="p-grid">
+          <div class="p-col">
+            <div *ngIf="!showAdminBoard">
+              <div>Nombre:</div>
+              <input
+                pInputText
+                type="text"
+                readonly="true"
+                class="p-inputtext-sm"
+                [(ngModel)]="currentUser.name"
+              />
+            </div>
+            <div *ngIf="showAdminBoard">
+              <div>Nombre:</div>
+              <p-dropdown
+                [options]="usuarios"
+                [(ngModel)]="selectedUsuario"
+                placeholder="Seleccione un Usuario"
+                optionLabel="name"
+                styleClass="p-inputtext-sm"
+                (ngModelChange)="onUserChange(); cargarValores()"
+              ></p-dropdown>
+            </div>
+          </div>
+        </div>
+        <div class="p-col">
+          <div>
+            <div>Desembolso:</div>
+            <p-multiSelect
+              [options]="registrosEntrada"
+              [(ngModel)]="registrosEntrada"
+              optionLabel="observaciones"
+              readonly="true"
+              class="p-inputtext-sm"
+              defaultLabel="Sin desembolsos activos"
+            ></p-multiSelect>
+          </div>
+        </div>
+        <p-footer>
+          <ion-grid>
+            <ion-row>
+              <ion-col class="align-items-center ion-text-center">
+                Total:
+                <ion-text *ngIf="total < 0" color="danger">
+                  <span>$ {{ total }}</span>
+                </ion-text>
+                <ion-text *ngIf="total > 0" color="success">
+                  <span>$ {{ total }}</span>
+                </ion-text>
+                <ion-text *ngIf="total == 0">
+                  <span>$ {{ total }}</span>
+                </ion-text>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </p-footer>
+      </p-panel>
+    </ion-col>
+    <ion-col>
+      
+    </ion-col>
+  </ion-grid>
 </ion-content>
