@@ -7,6 +7,8 @@ import { ToastController } from "@ionic/angular";
 import { Storage } from "@ionic/storage";
 import { MenuController } from "@ionic/angular";
 import { AlertController } from "@ionic/angular";
+/** PrimeNG */
+import { PrimeNGConfig } from "primeng/api";
 //* Servicios */
 import { AuthService } from "src/app/services/auth.service";
 import { TokenStorageService } from "src/app/services/token-storage.service";
@@ -62,7 +64,6 @@ export class GastosPage implements OnInit {
   registrosEntrada: RegistroEntrada[] = [];
   saldos: Saldo[] = [];
   selectedSaldo: Saldo[] = [];
-  es: any;
   cols: any[];
   form: any = {};
   isSuccessful: boolean = false;
@@ -89,8 +90,13 @@ export class GastosPage implements OnInit {
     private menuController: MenuController,
     private toastController: ToastController,
     private storage: Storage,
-    private alertController: AlertController
-  ) {}
+    private alertController: AlertController,
+    private config: PrimeNGConfig
+  ) {
+    
+  }
+
+
   ngOnInit(): void {
     this.formRegistroSalida = this.fb.group({
       idRegistroSalida: new FormControl(),
@@ -104,32 +110,7 @@ export class GastosPage implements OnInit {
       ]),
       users: new FormControl(),
     });
-  }
-
-  async ionViewDidEnter(): Promise<void> {
-    this.isLoggedIn = !!this.token.getToken();
-    if (this.isLoggedIn) {
-      await this.obtenerUsuario();
-    }
-    if (this.showAdminBoard) {
-      this.selectedUsuario = this.currentUser;
-      this.registrosEntrada = null;
-      this.obtenerUsuarios();
-      this.currentUser = null;
-    }
-    this.obtenerDescripciones();
-    this.obtenerRegistrosEntrada();
-    this.obtenerSaldos();
-    this.obtenerRegistrosSalid();
-    
-    this.cols = [
-      { field: "fecha", header: "Fecha" },
-      { field: "description", subfield: "nombre", header: "Descripcion" },
-      { field: "observaciones", header: "Observaciones" },
-      { field: "cantidad", header: "Cantidad" },
-    ];
-    this.es = {
-      firstDayOfWeek: 1,
+    this.config.setTranslation({
       dayNames: [
         "domingo",
         "lunes",
@@ -171,7 +152,32 @@ export class GastosPage implements OnInit {
       ],
       today: "Hoy",
       clear: "Borrar",
-    };
+    });
+  }
+
+  async ionViewDidEnter(): Promise<void> {
+    this.isLoggedIn = !!this.token.getToken();
+    if (this.isLoggedIn) {
+      await this.obtenerUsuario();
+    }
+    if (this.showAdminBoard) {
+      this.selectedUsuario = this.currentUser;
+      this.registrosEntrada = null;
+      this.obtenerUsuarios();
+      this.currentUser = null;
+    }
+    this.obtenerDescripciones();
+    this.obtenerRegistrosEntrada();
+    this.obtenerSaldos();
+    this.obtenerRegistrosSalid();
+    
+    this.cols = [
+      { field: "fecha", header: "Fecha" },
+      { field: "description", subfield: "nombre", header: "Descripcion" },
+      { field: "observaciones", header: "Observaciones" },
+      { field: "cantidad", header: "Cantidad" },
+    ];
+    
   }
 
   async obtenerUsuario() {

@@ -90,6 +90,22 @@
               </ion-row>
             </ion-grid>
           </p-header>
+          <ion-grid>
+            <ion-row class="ion-justify-content-between">
+              <ion-col>
+                <ion-label>Fecha:</ion-label>
+              </ion-col>
+              <ion-col>
+                <p-calendar
+                  dataType="string"
+                  dateFormat="yy-mm-dd"
+                  showButtonBar="true"
+                  formControlName="fecha"
+                  locale="es"
+                ></p-calendar>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
         </p-panel>
       </form>
     </ion-col>
