@@ -1,0 +1,13 @@
+{
+  "appId": "com.cdmservicios.gastos",
+  "appName": "ControlGastosMovilApp",
+  "bundledWebRuntime": false,
+  "npmClient": "npm",
+  "webDir": "www",
+  "plugins": {
+    "SplashScreen": {
+      "launchShowDuration": 0
+    }
+  },
+  "cordova": {}
+}

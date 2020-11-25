@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">ControlGastosMovilApp</string>
+    <string name="title_activity_main">ControlGastosMovilApp</string>
+    <string name="package_name">com.cdmservicios.gastos</string>
+    <string name="custom_url_scheme">com.cdmservicios.gastos</string>
+</resources>
