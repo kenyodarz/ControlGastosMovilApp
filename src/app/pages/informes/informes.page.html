@@ -10,5 +10,53 @@
 </ion-header>
 
 <ion-content>
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <ion-list>
+          <ion-list-header>
+            <ion-text color="primary">
+              <b>Lista Gastos</b>
+            </ion-text>
+          </ion-list-header>
+        </ion-list>
 
+        <ion-item *ngFor="let item of registrosSalida; index as index">
+          <ion-buttons slot="end">
+            <ion-button color="danger" (click)="eliminar(item)"
+              ><ion-icon name="trash"></ion-icon
+            ></ion-button>
+          </ion-buttons>
+          <ion-label>
+            {{index + 1}}
+            <h2>{{item.observaciones}}</h2>
+            <h3>{{item.fecha}}</h3>
+            <p>{{item.description.nombre}}</p>
+          </ion-label>
+        </ion-item>
+        <!-- <p-panel>
+          <p-header>
+            <ion-grid>
+              <ion-row>
+                <ion-text color="primary"><b>Informe Gastos</b></ion-text>
+              </ion-row>
+            </ion-grid>
+          </p-header>
+          <p-table
+            #dt
+            [value]="registrosSalida"
+            dataKey="idRegistroSalida"
+            [(selection)]="selectedRegistroSalida"
+            [columns]="cols"
+            [paginator]="true"
+            selectionMode="single"
+            editMode="row"
+            [rows]="10"
+            [responsive]="true"
+          >
+          </p-table>
+        </p-panel> -->
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>

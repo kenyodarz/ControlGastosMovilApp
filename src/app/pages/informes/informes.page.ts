@@ -1,29 +1,13 @@
 //* Angular */
-import { Component, OnInit } from "@angular/core";
-import { FormGroup, FormControl } from "@angular/forms";
-import { Validators, FormBuilder } from "@angular/forms";
+import { Component } from "@angular/core";
 /** Ionic */
 import { ToastController } from "@ionic/angular";
-import { Storage } from "@ionic/storage";
-import { MenuController } from "@ionic/angular";
 import { AlertController } from "@ionic/angular";
-/** PrimeNG */
-import { PrimeNGConfig } from "primeng/api";
 //* Servicios */
-import { AuthService } from "src/app/services/auth.service";
 import { TokenStorageService } from "src/app/services/token-storage.service";
-import { DescriptionService } from "src/app/services/description.service";
-import { ProyectoService } from "src/app/services/proyecto.service";
-import { RegistroService } from "src/app/services/registro.service";
 import { RegistroSalidaService } from "src/app/services/registro-salida.service";
-import { SaldoService } from "src/app/services/saldo.service";
-import { UsuarioService } from "src/app/services/usuario.service";
 //* Modelos */
-import { RegistroEntrada } from "src/app/models/RegistroEntrada";
 import { RegistroSalida } from "src/app/models/RegistroSalida";
-import { Description } from "src/app/models/description";
-import { Proyecto } from "src/app/models/Proyecto";
-import { Saldo } from "src/app/models/Saldo";
 import { User } from "src/app/models/user";
 
 @Component({
@@ -31,21 +15,143 @@ import { User } from "src/app/models/user";
   templateUrl: "./informes.page.html",
   styleUrls: ["./informes.page.scss"],
 })
-export class InformesPage implements OnInit {
+export class InformesPage {
+  currentUser: any = {
+    accessToken: null,
+    email: null,
+    id: null,
+    name: null,
+    roles: [],
+    tokenType: null,
+    username: null,
+  };
+  private roles: string[];
+  isLoggedIn = false;
+  selectedUsuario: User;
+  registrosSalida: RegistroSalida[] = [];
+  showAdminBoard = false;
+
   constructor(
-    private fb: FormBuilder,
-    private authService: AuthService,
-    private descriptionService: DescriptionService,
-    private proyectoService: ProyectoService,
-    private registroService: RegistroService,
     private registroSalidaService: RegistroSalidaService,
-    private saldoService: SaldoService,
-    private usuariosService: UsuarioService,
     private token: TokenStorageService,
-    private menuController: MenuController,
-    private toastController: ToastController,
-    private config: PrimeNGConfig
+    private alertController: AlertController,
+    private toastController: ToastController
   ) {}
 
-  ngOnInit() {}
+  async ionViewDidEnter(): Promise<void> {
+    this.isLoggedIn = !!this.token.getToken();
+    if (this.isLoggedIn) {
+      await this.obtenerUsuario();
+    }
+    if (this.showAdminBoard) {
+      this.selectedUsuario = this.currentUser;
+      this.currentUser = null;
+    }
+    this.obtenerRegistrosSalid();
+  }
+
+  async obtenerUsuario() {
+    let user: any;
+    await this.token.getUser().then((data) => {
+      user = data;
+    });
+    this.roles = user.roles;
+    this.showAdminBoard = this.roles.includes("ROLE_ADMIN");
+    this.currentUser = user;
+  }
+
+  obtenerRegistrosSalid() {
+    this.registroSalidaService.getAll().subscribe(
+      (result: any) => {
+        let registrosSalidas: RegistroSalida[] = [];
+        for (let index = 0; index < result.length; index++) {
+          let registroSalida = result[index] as RegistroSalida;
+          if (this.showAdminBoard) {
+            if (this.currentUser.username == registroSalida.users.username) {
+              if (registroSalida.informe === null) {
+                registrosSalidas.push(registroSalida);
+              }
+            }
+          } else {
+            if (this.currentUser.username == registroSalida.users.username) {
+              if (registroSalida.informe === null) {
+                registrosSalidas.push(registroSalida);
+              }
+            }
+          }
+        }
+        this.registrosSalida = registrosSalidas.sort(function (a, b) {
+          if (a.fecha > b.fecha) {
+            return 1;
+          }
+          if (a.fecha < b.fecha) {
+            return -1;
+          }
+          // Si a y b son iguales
+          return 0;
+        });
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  }
+
+  async eliminar(registro: RegistroSalida) {
+    const alert = await this.alertController.create({
+      cssClass: "my-custom-class",
+      header: "Atencion",
+      message: "¿Está seguro que desea eliminar el registro?",
+      buttons: [
+        {
+          text: "Si, Eliminar",
+          handler: () => {
+            this.registroSalidaService
+              .delete(registro.idRegistroSalida)
+              .subscribe((result: any) => {
+                this.toastSuccess(
+                  `Se elimino el registro de ${result.observaciones} correctamente`
+                );
+                this.eliminarRegistroSalida(result.idRegistro);
+              });
+          },
+        },
+        {
+          text: "No",
+          role: "cancel",
+          cssClass: "secondary",
+          handler: () => {
+            this.toastError("Accion cancelada");
+          },
+        },
+      ],
+    });
+    await alert.present();
+  }
+  eliminarRegistroSalida(idRegistro: number) {
+    this.registrosSalida.splice(
+      this.registrosSalida.findIndex((e) => e.idRegistroSalida == idRegistro),
+      1
+    );
+  }
+
+  async toastError(message: string) {
+    const toast = await this.toastController.create({
+      message: message,
+      duration: 2000,
+      color: "danger",
+      position: "middle",
+    });
+    toast.present();
+  }
+
+  async toastSuccess(message: string) {
+    const toast = await this.toastController.create({
+      message: message,
+      duration: 2000,
+      color: "success",
+      position: "top",
+    });
+    toast.present();
+  }
 }
