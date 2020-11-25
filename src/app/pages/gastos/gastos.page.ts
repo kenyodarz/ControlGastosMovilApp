@@ -4,16 +4,11 @@ import { FormGroup, FormControl } from "@angular/forms";
 import { Validators, FormBuilder } from "@angular/forms";
 /** Ionic */
 import { ToastController } from "@ionic/angular";
-import { Storage } from "@ionic/storage";
-import { MenuController } from "@ionic/angular";
-import { AlertController } from "@ionic/angular";
 /** PrimeNG */
 import { PrimeNGConfig } from "primeng/api";
 //* Servicios */
-import { AuthService } from "src/app/services/auth.service";
 import { TokenStorageService } from "src/app/services/token-storage.service";
 import { DescriptionService } from "src/app/services/description.service";
-import { ProyectoService } from "src/app/services/proyecto.service";
 import { RegistroService } from "src/app/services/registro.service";
 import { RegistroSalidaService } from "src/app/services/registro-salida.service";
 import { SaldoService } from "src/app/services/saldo.service";
@@ -82,18 +77,13 @@ export class GastosPage implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private authService: AuthService,
     private descriptionService: DescriptionService,
-    private proyectoService: ProyectoService,
     private registroService: RegistroService,
     private registroSalidaService: RegistroSalidaService,
     private saldoService: SaldoService,
     private usuariosService: UsuarioService,
     private token: TokenStorageService,
-    private menuController: MenuController,
     private toastController: ToastController,
-    private storage: Storage,
-    private alertController: AlertController,
     private config: PrimeNGConfig
   ) {}
 

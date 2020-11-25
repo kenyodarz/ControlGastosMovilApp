@@ -22,6 +22,13 @@ const routes: Routes = [
             (m) => m.GastosPageModule
           ),
       },
+      {
+        path: "informes",
+        loadChildren: () =>
+          import("src/app/pages/informes/informes.module").then(
+            (m) => m.InformesPageModule
+          ),
+      },
     ],
   },
   {

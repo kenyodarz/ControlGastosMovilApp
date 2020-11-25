@@ -103,4 +103,8 @@ export class MenuPage {
     this.nvCrtl.navigateRoot("/menu/gastos");
     this.menuController.close();
   }
+  goToInformes(){
+    this.nvCrtl.navigateRoot("/menu/informes");
+    this.menuController.close();
+  }
 }
