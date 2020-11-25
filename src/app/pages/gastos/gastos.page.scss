@@ -1,3 +1,25 @@
-ion-label{
-  align-self: center
+ion-label {
+  align-self: center;
+}
+// ion-grid {
+//   border: 1px solid red;
+// }
+// ion-row {
+//   border: 1px solid red;
+// }
+ion-col {
+  // border: 1px solid red;
+  padding: 1px;
+}
+
+::ng-deep .p-dropdown {
+  width: 100%;
+}
+
+::ng-deep .p-calendar {
+  width: 100%;
+}
+
+::ng-deep input {
+  width: 100%;
 }

@@ -26,6 +26,10 @@ const routes: Routes = [
       import("./pages/intro/intro.module").then((m) => m.IntroPageModule),
     canActivate: [LoginGuard],
   },
+  {
+    path: 'informes',
+    loadChildren: () => import('./pages/informes/informes.module').then( m => m.InformesPageModule)
+  },
 ];
 
 @NgModule({

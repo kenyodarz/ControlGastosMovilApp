@@ -93,10 +93,10 @@
           </p-header>
           <ion-grid>
             <ion-row class="ion-justify-content-between">
-              <ion-col>
+              <ion-col size="5">
                 <ion-label>Fecha:</ion-label>
               </ion-col>
-              <ion-col>
+              <ion-col size="7">
                 <p-calendar
                   dataType="string"
                   dateFormat="yy-mm-dd"
@@ -116,10 +116,10 @@
               </div>
             </ion-row>
             <ion-row class="ion-justify-content-between">
-              <ion-col>
+              <ion-col size="5">
                 <ion-label>Tipo de Gasto:*</ion-label>
               </ion-col>
-              <ion-col>
+              <ion-col size="7">
                 <p-dropdown
                   [options]="descriptions"
                   optionLabel="nombre"
@@ -140,10 +140,10 @@
               </div>
             </ion-row>
             <ion-row class="ion-justify-content-between">
-              <ion-col>
+              <ion-col size="5">
                 <ion-label> Nro. Factura o detalle del gasto:* </ion-label>
               </ion-col>
-              <ion-col>
+              <ion-col size="7">
                 <input
                   pInputText
                   type="text"
@@ -162,9 +162,9 @@
               </div>
             </ion-row>
             <ion-row>
-              <ion-col><ion-label>Valor</ion-label></ion-col>
-              <ion-col
-                ><input
+              <ion-col size="5"><ion-label>Valor</ion-label></ion-col>
+              <ion-col size="7">
+                <input
                   pInputText
                   styleClass="p-inputtext-sm"
                   type="text"

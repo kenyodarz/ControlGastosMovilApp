@@ -32,11 +32,14 @@ import { User } from "src/app/models/user";
   styleUrls: ["./gastos.page.scss"],
 })
 export class GastosPage implements OnInit {
-  currentUser: User = {
-    id: null,
-    username: null,
-    name: null,
+  currentUser: any = {
+    accessToken: null,
     email: null,
+    id: null,
+    name: null,
+    roles: [],
+    tokenType: null,
+    username: null,
   };
   private roles: string[];
   isLoggedIn = false;
@@ -92,10 +95,7 @@ export class GastosPage implements OnInit {
     private storage: Storage,
     private alertController: AlertController,
     private config: PrimeNGConfig
-  ) {
-    
-  }
-
+  ) {}
 
   ngOnInit(): void {
     this.formRegistroSalida = this.fb.group({
@@ -170,14 +170,13 @@ export class GastosPage implements OnInit {
     this.obtenerRegistrosEntrada();
     this.obtenerSaldos();
     this.obtenerRegistrosSalid();
-    
+
     this.cols = [
       { field: "fecha", header: "Fecha" },
       { field: "description", subfield: "nombre", header: "Descripcion" },
       { field: "observaciones", header: "Observaciones" },
       { field: "cantidad", header: "Cantidad" },
     ];
-    
   }
 
   async obtenerUsuario() {
@@ -283,9 +282,11 @@ export class GastosPage implements OnInit {
               }
             }
           } else {
-            if (this.currentUser.username == registroSalida.users.username) {
-              if (registroSalida.informe === null) {
-                registrosSalidas.push(registroSalida);
+            if (this.currentUser) {
+              if (this.currentUser.username === registroSalida.users.username) {
+                if (registroSalida.informe === null) {
+                  registrosSalidas.push(registroSalida);
+                }
               }
             }
           }
@@ -412,6 +413,7 @@ export class GastosPage implements OnInit {
   }
 
   guardarRegistroSalida(): void {
+    console.info(this.registroSalida);
     this.registroSalidaService
       .save(this.registroSalida)
       .subscribe((result: any) => {
