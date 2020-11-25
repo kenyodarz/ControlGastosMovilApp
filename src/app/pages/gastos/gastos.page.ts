@@ -174,7 +174,6 @@ export class GastosPage implements OnInit {
     await this.token.getUser().then((data) => {
       user = data;
     });
-    console.log(user);
     this.roles = user.roles;
     this.showAdminBoard = this.roles.includes("ROLE_ADMIN");
     this.currentUser = user;
@@ -190,7 +189,6 @@ export class GastosPage implements OnInit {
             users.push(user);
           }
           this.usuarios = users;
-          console.log(this.usuarios);
         },
         (error) => {
           console.log(error);
@@ -232,7 +230,6 @@ export class GastosPage implements OnInit {
               if (registroEntrada.informe === null) {
                 registrosEntradas.push(registroEntrada);
               }
-              // console.log(registroEntrada);
             }
           } else {
             if (this.currentUser.username == registroEntrada.users.username) {
@@ -318,7 +315,6 @@ export class GastosPage implements OnInit {
         // Cuando Son Iguales Retornamos 0
         return 0;
       });
-      // console.log(this.saldos);
     });
   }
 
@@ -342,7 +338,6 @@ export class GastosPage implements OnInit {
       });
     }
     this.total = debito - credito;
-    // console.log(this.registrosEntrada.length !== 0);
     if (this.registrosEntrada) {
       if (this.registrosEntrada.length > 0) {
         this.showActions = true;
@@ -383,7 +378,7 @@ export class GastosPage implements OnInit {
       let a =
         this.selectedRegistroSalida.cantidad - this.registroSalida.cantidad;
       if (this.total + a < 0) {
-        this.toasError(
+        this.toastError(
           `Se excede la cantidad disponible por + ${this.total + a}`
         );
         this.formRegistroSalida.reset();
@@ -396,25 +391,24 @@ export class GastosPage implements OnInit {
       if (this.total >= this.formRegistroSalida.value.cantidad) {
         this.guardarRegistroSalida();
       } else {
-        this.toasError("El gasto ingresado excede el dinero disponible");
+        this.toastError("El gasto ingresado excede el dinero disponible");
       }
     }
     this.sumTotal();
   }
 
   guardarRegistroSalida(): void {
-    console.info(this.registroSalida);
     this.registroSalidaService
       .save(this.registroSalida)
       .subscribe((result: any) => {
         let registroSalida = result as RegistroSalida;
         this.validarRegistroSalida(registroSalida);
-        this.toasSuccess("Se guardo el registro correctamente");
+        this.toastSuccess("Se guardo el registro correctamente");
         this.displaySaveEditDialog = false;
       });
     (error) => {
       console.log(error);
-      this.toasError("Se genero un error al guardar el Registro");
+      this.toastError("Se genero un error al guardar el Registro");
     };
     this.formRegistroSalida.reset();
   }
@@ -435,21 +429,19 @@ export class GastosPage implements OnInit {
     this.saldoService.save(s).subscribe(
       (result: any) => {
         let saldo = result as Saldo;
-        this.toasSuccess(
+        this.toastSuccess(
           `"Se ha ${stado} el saldo: ${saldo.observaciones}correctamente`
         );
         // this.visibleSidebarSaldo = false;
       },
       (error) => {
         console.log(error);
-        this.toasError(`Se ha Producido el siguiente Error: ${error}`);
+        this.toastError(`Se ha Producido el siguiente Error: ${error}`);
       }
     );
   }
 
-  mostrarDialogoGuardar(editar: boolean) {}
-
-  async toasError(message: string) {
+  async toastError(message: string) {
     const toast = await this.toastController.create({
       message: message,
       duration: 2000,
@@ -459,7 +451,7 @@ export class GastosPage implements OnInit {
     toast.present();
   }
 
-  async toasSuccess(message: string) {
+  async toastSuccess(message: string) {
     const toast = await this.toastController.create({
       message: message,
       duration: 2000,
@@ -470,7 +462,6 @@ export class GastosPage implements OnInit {
   }
 
   onUserChange() {
-    console.info(this.selectedUsuario);
     this.currentUser = this.selectedUsuario;
     this.showActions = false;
     this.total = 0;

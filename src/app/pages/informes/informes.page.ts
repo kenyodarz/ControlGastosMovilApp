@@ -27,15 +27,25 @@ import { Saldo } from "src/app/models/Saldo";
 import { User } from "src/app/models/user";
 
 @Component({
-  selector: 'app-informes',
-  templateUrl: './informes.page.html',
-  styleUrls: ['./informes.page.scss'],
+  selector: "app-informes",
+  templateUrl: "./informes.page.html",
+  styleUrls: ["./informes.page.scss"],
 })
 export class InformesPage implements OnInit {
+  constructor(
+    private fb: FormBuilder,
+    private authService: AuthService,
+    private descriptionService: DescriptionService,
+    private proyectoService: ProyectoService,
+    private registroService: RegistroService,
+    private registroSalidaService: RegistroSalidaService,
+    private saldoService: SaldoService,
+    private usuariosService: UsuarioService,
+    private token: TokenStorageService,
+    private menuController: MenuController,
+    private toastController: ToastController,
+    private config: PrimeNGConfig
+  ) {}
 
-  constructor() { }
-
-  ngOnInit() {
-  }
-
+  ngOnInit() {}
 }
