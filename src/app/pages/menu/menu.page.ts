@@ -47,6 +47,7 @@ export class MenuPage {
           text: "Si, Cerrar Sesion",
           handler: () => {
             this.loginToast();
+            this.storage.set("isLoggedIn", false);
             this.storage.remove;
             this.nvCrtl.navigateRoot("/login");
           },

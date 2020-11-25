@@ -154,7 +154,7 @@ export class GastosPage implements OnInit {
       this.selectedUsuario = this.currentUser;
       this.registrosEntrada = null;
       this.obtenerUsuarios();
-      this.currentUser = null;
+      // this.currentUser = null;
     }
     this.obtenerDescripciones();
     this.obtenerRegistrosEntrada();

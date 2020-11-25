@@ -33,7 +33,7 @@ export class LoginPage implements OnInit {
       (data) => {
         this.tokenStorage.saveToken(data.accessToken);
         this.tokenStorage.saveUser(data);
-        this.loginToast();
+        this.loginToast(data);
         this.tokenStorage.getUser().then((val) => {
           this.roles = val;
         });
@@ -45,9 +45,9 @@ export class LoginPage implements OnInit {
     this.loginForm.reset();
   }
 
-  async loginToast() {
+  async loginToast(data) {
     const toast = await this.toastController.create({
-      message: "Se ha Logueado Correctamente",
+      message: `Bienvenido ${data.name}`,
       duration: 2000,
       color: "success",
     });
