@@ -4,8 +4,9 @@
 
 export const environment = {
   production: false,
-  API_URL: "http://localhost:8090/api",
 };
+
+export const API_URL = "http://152.200.130.126/gbackend/api";
 
 /*
  * For easier debugging in development mode, you can import the following file

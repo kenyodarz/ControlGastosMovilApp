@@ -7,13 +7,13 @@ import { CommonService } from "src/app/services/commons.service";
 import { Description } from 'src/app/models/Description';
 import { Observable } from 'rxjs';
 // Enviroment
-import { environment } from 'src/environments/environment';
+import { API_URL } from 'src/environments/environment';
 
 @Injectable({
   providedIn: "root",
 })
 export class DescriptionService extends CommonService<Description, number> {
-  protected API_URL: string = `${environment.API_URL}/description/`;
+  protected API_URL: string = `${API_URL}/description/`;
   constructor(protected http: HttpClient) {
     super(http);
   }
